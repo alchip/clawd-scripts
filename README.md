@@ -119,5 +119,27 @@ bash scripts/whisper-transcribe.sh /path/to/audio.caf
 WHISPER_LANG=en bash scripts/whisper-transcribe.sh /path/to/audio.m4a
 ```
 
+---
+
+### 6) Backup / Restore helpers
+These scripts help you back up and restore Clawdbot data:
+
+- `scripts/clawdbot-backup.sh` – rsync mirror backup to `~/Backups/clawdbot/latest`
+- `scripts/clawdbot-restore-latest.sh` – restore from the latest mirror (overwrites current files)
+- `scripts/clawdbot-snapshot.sh` – **manual** point-in-time snapshot (`tar.gz`) before risky upgrades
+- See also: `scripts/README.backup.md`
+
+Quick usage:
+```bash
+# Latest mirror backup
+scripts/clawdbot-backup.sh
+
+# Manual snapshot (recommended before core changes)
+scripts/clawdbot-snapshot.sh
+
+# Restore from latest mirror (DANGEROUS: overwrites current data)
+scripts/clawdbot-restore-latest.sh
+```
+
 ## License
 Internal utility scripts (add a license here if you intend to open-source).
