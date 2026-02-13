@@ -219,9 +219,29 @@ async function ibkrSecdefConidHK(symbol) {
   return String(hit.conid);
 }
 
+async function ibkrSsoValidate() {
+  // CP Gateway sometimes needs an explicit validate call after browser login.
+  const url = 'https://localhost:5005/v1/api/sso/validate';
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`IBKR sso/validate failed: ${res.status}`);
+  return await res.json();
+}
+
 async function ibkrAuthStatus() {
   const url = 'https://localhost:5005/v1/api/iserver/auth/status';
-  const res = await fetch(url);
+  let res = await fetch(url);
+
+  // If the user just logged in via the web UI, the gateway may still require
+  // a validate step before API calls return 200.
+  if (res.status === 401) {
+    try {
+      await ibkrSsoValidate();
+    } catch {
+      // ignore; we'll retry auth/status and surface the real status if still failing
+    }
+    res = await fetch(url);
+  }
+
   if (!res.ok) throw new Error(`IBKR auth status failed: ${res.status}`);
   return await res.json();
 }
