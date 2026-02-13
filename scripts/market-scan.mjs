@@ -323,6 +323,65 @@ async function ibkrQuoteHK(symbols) {
   }).filter(x => x.price);
 }
 
+// Optional display names (keep lightweight and offline).
+// Stooq quotes do not include company names, so we maintain a small mapping.
+const US_NAMES = {
+  AAPL: 'Apple',
+  MSFT: 'Microsoft',
+  NVDA: 'NVIDIA',
+  AMD: 'AMD',
+  AVGO: 'Broadcom',
+  TSM: 'TSMC',
+  JPM: 'JPMorgan',
+  BAC: 'Bank of America',
+  GS: 'Goldman Sachs',
+  MS: 'Morgan Stanley',
+  WFC: 'Wells Fargo',
+  XOM: 'Exxon Mobil',
+  CVX: 'Chevron',
+  SLB: 'SLB',
+  COP: 'ConocoPhillips',
+  EOG: 'EOG Resources',
+  LLY: 'Eli Lilly',
+  UNH: 'UnitedHealth',
+  JNJ: 'Johnson & Johnson',
+  MRK: 'Merck',
+  ABBV: 'AbbVie',
+  CAT: 'Caterpillar',
+  GE: 'GE Aerospace',
+  BA: 'Boeing',
+  HON: 'Honeywell',
+  RTX: 'RTX',
+  AMZN: 'Amazon',
+  TSLA: 'Tesla',
+  HD: 'Home Depot',
+  MCD: "McDonald's",
+  NKE: 'Nike',
+};
+
+const HK_NAMES = {
+  '0700.HK': 'Tencent 腾讯',
+  '9988.HK': 'Alibaba 阿里巴巴',
+  '3690.HK': 'Meituan 美团',
+  '0941.HK': 'China Mobile 中国移动',
+  '1810.HK': 'Xiaomi 小米',
+  '1024.HK': 'Kuaishou 快手',
+  '0939.HK': 'CCB 建设银行',
+  '1398.HK': 'ICBC 工商银行',
+  '3988.HK': 'BOC 中国银行',
+  '2318.HK': 'Ping An 平安',
+  '2800.HK': 'Tracker Fund 盈富基金',
+  '3033.HK': 'HS Tech ETF 恒生科技ETF',
+  '2823.HK': 'iShares A50 安硕A50',
+};
+
+function displayName(sym) {
+  if (!sym) return '';
+  const s = sym.toUpperCase();
+  if (s.endsWith('.HK')) return HK_NAMES[s] || '';
+  return US_NAMES[s] || '';
+}
+
 const US_SECTORS = [
   { id: 'Tech', etf: 'XLK', stocks: ['AAPL','MSFT','NVDA','AMD','AVGO','TSM'] },
   { id: 'Financials', etf: 'XLF', stocks: ['JPM','BAC','GS','MS','WFC'] },
@@ -440,7 +499,8 @@ async function run() {
     const ch = pct(q.changePct);
     const vol = q.volume ? q.volume.toLocaleString('en-US') : 'n/a';
 
-    console.log(`- ${p.sym} — ${p.sector}（行业）`);
+    const nm = displayName(p.sym);
+    console.log(`- ${p.sym}${nm ? ` (${nm})` : ''} — ${p.sector}（行业）`);
     console.log(`  px 现价: ${fmtMoney(q.price)} ${q.currency || ''} | chg 涨跌: ${ch ?? 'n/a'}% | vol 成交量: ${vol}`);
     if (pl) {
       console.log(`  plan 计划: BUY <= ${fmtMoney(pl.entry)} | stop 止损 ${fmtMoney(pl.stop)} (-${pl.stopPct}%) | take 止盈 ${fmtMoney(pl.take)} (+${pl.takePct}%)`);
