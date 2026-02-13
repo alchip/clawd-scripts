@@ -483,7 +483,13 @@ async function run() {
 
   const mktLabel = market === 'us' ? 'US 美股' : market === 'hk' ? 'HK 港股' : market.toUpperCase();
   const header = `[${t.iso}] Scan ${mktLabel} (delayed 延迟) — Top sectors 行业: ` +
-    topSectors.map(s => `${s.id}(${s.etf} ${pct(s.q.changePct) ?? 0}%)`).join(', ');
+    topSectors
+      .map(s => {
+        const nm = displayName(s.etf);
+        const etfLabel = nm ? `${s.etf} (${nm})` : s.etf;
+        return `${s.id}(${etfLabel} ${pct(s.q.changePct) ?? 0}%)`;
+      })
+      .join(', ');
 
   console.log(header);
   console.log('');
