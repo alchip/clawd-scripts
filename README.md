@@ -143,3 +143,8 @@ scripts/clawdbot-restore-latest.sh
 
 ## License
 Internal utility scripts (add a license here if you intend to open-source).
+
+## Workspace Migration Note (2026-02-19)
+- This repo is now mirrored under: `/Users/sunny/.openclaw/workspace/clawd-scripts`
+- GitHub remote (`origin`) is set to: `git@github.com:alchip/clawd-scripts.git`
+- Purpose: keep legacy scripts available in the current OpenClaw workspace and sync updates to GitHub from here.
