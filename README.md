@@ -81,7 +81,7 @@ bash scripts/nx-autoclean.sh
 
 ---
 
-### 4) `scripts/clawdbot-log-cleanup.sh` (Shell)
+### 4) `scripts/openclaw-log-cleanup.sh` (Shell)
 Housekeeping for Clawdbot logs.
 
 - Deletes old daily gateway logs under `/tmp/clawdbot` (default: 14 days)
@@ -96,7 +96,7 @@ Environment variables (optional):
 
 Run manually:
 ```bash
-bash scripts/clawdbot-log-cleanup.sh
+bash scripts/openclaw-log-cleanup.sh
 ```
 
 ---
@@ -124,21 +124,21 @@ WHISPER_LANG=en bash scripts/whisper-transcribe.sh /path/to/audio.m4a
 ### 6) Backup / Restore helpers
 These scripts help you back up and restore Clawdbot data:
 
-- `scripts/clawdbot-backup.sh` – rsync mirror backup to `~/Backups/clawdbot/latest`
-- `scripts/clawdbot-restore-latest.sh` – restore from the latest mirror (overwrites current files)
-- `scripts/clawdbot-snapshot.sh` – **manual** point-in-time snapshot (`tar.gz`) before risky upgrades
+- `scripts/openclaw-backup.sh` – rsync mirror backup to `~/Backups/clawdbot/latest`
+- `scripts/openclaw-restore-latest.sh` – restore from the latest mirror (overwrites current files)
+- `scripts/openclaw-snapshot.sh` – **manual** point-in-time snapshot (`tar.gz`) before risky upgrades
 - See also: `scripts/README.backup.md`
 
 Quick usage:
 ```bash
 # Latest mirror backup
-scripts/clawdbot-backup.sh
+scripts/openclaw-backup.sh
 
 # Manual snapshot (recommended before core changes)
-scripts/clawdbot-snapshot.sh
+scripts/openclaw-snapshot.sh
 
 # Restore from latest mirror (DANGEROUS: overwrites current data)
-scripts/clawdbot-restore-latest.sh
+scripts/openclaw-restore-latest.sh
 ```
 
 ## License

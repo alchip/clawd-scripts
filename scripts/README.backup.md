@@ -16,7 +16,7 @@ We use **two layers**:
 
 ### Backup (creates/updates the mirror)
 Script:
-- `clawdbot-backup.sh`
+- `openclaw-backup.sh`
 
 Destination:
 - `~/Backups/clawdbot/latest/`
@@ -25,7 +25,7 @@ Destination:
 
 Run manually:
 ```bash
-/Users/sunny/.openclaw/workspace/clawd-scripts/scripts/clawdbot-backup.sh
+/Users/sunny/.openclaw/workspace/clawd-scripts/scripts/openclaw-backup.sh
 ```
 
 Optional environment variables (exclude big rebuildable dirs under `~/.openclaw`):
@@ -36,12 +36,12 @@ Optional environment variables (exclude big rebuildable dirs under `~/.openclaw`
 Example (lightweight backup):
 ```bash
 EXCLUDE_MODELS=1 EXCLUDE_BROWSER_PROFILES=1 EXCLUDE_LOGS=1 \
-  /Users/sunny/.openclaw/workspace/clawd-scripts/scripts/clawdbot-backup.sh
+  /Users/sunny/.openclaw/workspace/clawd-scripts/scripts/openclaw-backup.sh
 ```
 
 ### Restore (from latest mirror)
 Script:
-- `clawdbot-restore-latest.sh`
+- `openclaw-restore-latest.sh`
 
 What it does:
 - Stops the gateway (`openclaw gateway stop`)
@@ -50,7 +50,7 @@ What it does:
 
 Run:
 ```bash
-/Users/sunny/.openclaw/workspace/clawd-scripts/scripts/clawdbot-restore-latest.sh
+/Users/sunny/.openclaw/workspace/clawd-scripts/scripts/openclaw-restore-latest.sh
 ```
 
 ⚠️ **Warning:** restore uses `rsync --delete` and will overwrite current files.
@@ -63,20 +63,20 @@ Use this before **key upgrades / kernel edits** so you can easily roll back.
 
 ### Create snapshot
 Script:
-- `clawdbot-snapshot.sh`
+- `openclaw-snapshot.sh`
 
 Destination:
 - `~/Backups/clawdbot/snapshots/clawdbot-snapshot-YYYYmmdd-HHMMSS.tgz`
 
 Run:
 ```bash
-/Users/sunny/.openclaw/workspace/clawd-scripts/scripts/clawdbot-snapshot.sh
+/Users/sunny/.openclaw/workspace/clawd-scripts/scripts/openclaw-snapshot.sh
 ```
 
 Optional environment variables (same idea as mirror; excludes apply to the `~/.openclaw` part):
 ```bash
 EXCLUDE_MODELS=1 EXCLUDE_BROWSER_PROFILES=1 EXCLUDE_LOGS=1 \
-  /Users/sunny/.openclaw/workspace/clawd-scripts/scripts/clawdbot-snapshot.sh
+  /Users/sunny/.openclaw/workspace/clawd-scripts/scripts/openclaw-snapshot.sh
 ```
 
 ### Restore snapshot
