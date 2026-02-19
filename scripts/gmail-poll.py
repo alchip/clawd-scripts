@@ -2,7 +2,7 @@
 """Gmail INBOX poller.
 
 - Connects via IMAP (imap.gmail.com) using an App Password.
-- Tracks last seen UID in ~/.clawdbot/state/gmail-poll.json.
+- Tracks last seen UID in ~/.openclaw/state/gmail-poll.json.
 - Prints NO_REPLY if no new messages.
 - Otherwise prints one line per new message: "<from> — <subject>".
 
@@ -26,7 +26,7 @@ from email import message_from_bytes
 from email.header import decode_header
 from pathlib import Path
 
-STATE_PATH = Path.home() / ".clawdbot" / "state" / "gmail-poll.json"
+STATE_PATH = Path.home() / ".openclaw" / "state" / "gmail-poll.json"
 
 
 def _decode_subject(raw: str | bytes | None) -> str:

@@ -3,14 +3,14 @@ set -euo pipefail
 
 # Clawdbot log cleanup
 # - Removes old daily gateway logs under /tmp/clawdbot
-# - Rotates + gzips large launchd stdout/stderr logs under ~/.clawdbot/logs
+# - Rotates + gzips large launchd stdout/stderr logs under ~/.openclaw/logs
 
 DAYS_TMP=${DAYS_TMP:-14}
 DAYS_ROTATED=${DAYS_ROTATED:-30}
 MAX_BYTES=${MAX_BYTES:-200000000}  # 200MB
 
 TMP_DIR="/tmp/clawdbot"
-LOG_DIR="$HOME/.clawdbot/logs"
+LOG_DIR="$HOME/.openclaw/logs"
 ROT_DIR="$LOG_DIR/rotated"
 
 mkdir -p "$ROT_DIR"

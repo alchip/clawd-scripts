@@ -3,19 +3,19 @@ set -euo pipefail
 
 # clawdbot-snapshot.sh
 # Creates a point-in-time snapshot tarball (manual run) containing:
-#   - /Users/sunny/clawd
-#   - /Users/sunny/.clawdbot
+#   - /Users/sunny/.openclaw/workspace
+#   - /Users/sunny/.openclaw
 # Output:
-#   ~/Backups/clawdbot/snapshots/clawdbot-snapshot-YYYYmmdd-HHMMSS.tgz
+#   ~/Backups/openclaw/snapshots/openclaw-snapshot-YYYYmmdd-HHMMSS.tgz
 
-SRC_CLAWD="/Users/sunny/clawd"
-SRC_CLAWDBOT="$HOME/.clawdbot"
+SRC_CLAWD="/Users/sunny/.openclaw/workspace"
+SRC_CLAWDBOT="$HOME/.openclaw"
 
-DEST_BASE="$HOME/Backups/clawdbot/snapshots"
+DEST_BASE="$HOME/Backups/openclaw/snapshots"
 mkdir -p "$DEST_BASE"
 
 STAMP=$(date +"%Y%m%d-%H%M%S")
-OUT="$DEST_BASE/clawdbot-snapshot-$STAMP.tgz"
+OUT="$DEST_BASE/openclaw-snapshot-$STAMP.tgz"
 
 # Optional excludes (set to 1 to exclude from the snapshot)
 EXCLUDE_MODELS="${EXCLUDE_MODELS:-0}"
@@ -28,13 +28,13 @@ log() { echo "[snapshot $(stamp)] $*"; }
 # Build tar exclude list (paths are relative to /Users/sunny)
 TAR_EXCLUDES=()
 if [[ "$EXCLUDE_MODELS" == "1" ]]; then
-  TAR_EXCLUDES+=(--exclude='.clawdbot/models')
+  TAR_EXCLUDES+=(--exclude='Users/sunny/.openclaw/models')
 fi
 if [[ "$EXCLUDE_BROWSER_PROFILES" == "1" ]]; then
-  TAR_EXCLUDES+=(--exclude='.clawdbot/browser' --exclude='.clawdbot/chrome-cdp-profile')
+  TAR_EXCLUDES+=(--exclude='Users/sunny/.openclaw/browser' --exclude='Users/sunny/.openclaw/chrome-cdp-profile')
 fi
 if [[ "$EXCLUDE_LOGS" == "1" ]]; then
-  TAR_EXCLUDES+=(--exclude='.clawdbot/logs')
+  TAR_EXCLUDES+=(--exclude='Users/sunny/.openclaw/logs')
 fi
 
 log "Creating snapshot: $OUT"
@@ -48,9 +48,9 @@ TAR_ARGS=(/usr/bin/tar -czf "$OUT")
 if (( ${#TAR_EXCLUDES[@]} )); then
   TAR_ARGS+=("${TAR_EXCLUDES[@]}")
 fi
-TAR_ARGS+=(-C / "Users/sunny/clawd" "Users/sunny/.clawdbot")
+TAR_ARGS+=(-C / "Users/sunny/.openclaw/workspace" "Users/sunny/.openclaw")
 
 "${TAR_ARGS[@]}"
 
 log "Snapshot done. File size: $(du -h "$OUT" | awk '{print $1}')"
-log "To restore: clawdbot gateway stop; sudo tar -xzf '$OUT' -C /; clawdbot gateway start"
+log "To restore: openclaw gateway stop; sudo tar -xzf '$OUT' -C /; openclaw gateway start"

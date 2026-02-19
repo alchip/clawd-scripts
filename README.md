@@ -11,7 +11,7 @@ A small collection of utility scripts used with Clawdbot (cron jobs, housekeepin
 ### 1) `scripts/gmail-poll.py` (Python)
 Polls Gmail INBOX via IMAP and prints new messages.
 
-- State file: `~/.clawdbot/state/gmail-poll.json` (tracks `last_uid` per account/folder)
+- State file: `~/.openclaw/state/gmail-poll.json` (tracks `last_uid` per account/folder)
 - Output:
   - No new mail → prints exactly `NO_REPLY`
   - New mail → prints one line per email: `"<sender> — <subject>"`
@@ -85,7 +85,7 @@ bash scripts/nx-autoclean.sh
 Housekeeping for Clawdbot logs.
 
 - Deletes old daily gateway logs under `/tmp/clawdbot` (default: 14 days)
-- Rotates + gzips large launchd stdout/stderr logs under `~/.clawdbot/logs`
+- Rotates + gzips large launchd stdout/stderr logs under `~/.openclaw/logs`
   - `gateway.log`, `gateway.err.log`
 - Prunes rotated gz files (default: 30 days)
 
@@ -105,7 +105,7 @@ bash scripts/clawdbot-log-cleanup.sh
 Wrapper around `whisper.cpp` (`whisper-cli`) to transcribe an audio file and print plain text to stdout.
 
 - Default CLI path: `/opt/homebrew/bin/whisper-cli` (override with `WHISPER_CLI`)
-- Default model: `~/.clawdbot/models/whisper/ggml-small.bin` (override with `WHISPER_CPP_MODEL`)
+- Default model: `~/.openclaw/models/whisper/ggml-small.bin` (override with `WHISPER_CPP_MODEL`)
 - Default language: auto (override with `WHISPER_LANG`)
 
 It also handles common macOS audio formats:

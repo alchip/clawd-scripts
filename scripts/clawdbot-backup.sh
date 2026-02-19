@@ -3,19 +3,19 @@ set -euo pipefail
 
 # clawdbot-backup.sh
 # Rsync mirror backup of:
-#   A) /Users/sunny/clawd
-#   B) $HOME/.clawdbot
+#   A) /Users/sunny/.openclaw/workspace
+#   B) $HOME/.openclaw
 # to:
-#   $HOME/Backups/clawdbot/latest
+#   $HOME/Backups/openclaw/latest
 #
 # Notes:
 # - This mirrors (with --delete). Use snapshots for point-in-time archives.
 # - You can exclude large rebuildable directories by setting env vars below.
 
-SRC_CLAWD="/Users/sunny/clawd"
-SRC_CLAWDBOT="$HOME/.clawdbot"
+SRC_CLAWD="/Users/sunny/.openclaw/workspace"
+SRC_CLAWDBOT="$HOME/.openclaw"
 
-DEST_BASE="$HOME/Backups/clawdbot"
+DEST_BASE="$HOME/Backups/openclaw"
 DEST_LATEST="$DEST_BASE/latest"
 
 # Optional excludes (set to 1 to exclude)
@@ -51,12 +51,12 @@ log "Backing up A: $SRC_CLAWD → $DEST_LATEST/clawd/"
 mkdir -p "$DEST_LATEST/clawd"
 rsync "${RSYNC_COMMON[@]}" "$SRC_CLAWD/" "$DEST_LATEST/clawd/"
 
-log "Backing up B: $SRC_CLAWDBOT → $DEST_LATEST/.clawdbot/"
-mkdir -p "$DEST_LATEST/.clawdbot"
+log "Backing up B: $SRC_CLAWDBOT → $DEST_LATEST/.openclaw/"
+mkdir -p "$DEST_LATEST/.openclaw"
 if (( ${#EXCLUDES[@]} )); then
-  rsync "${RSYNC_COMMON[@]}" "${EXCLUDES[@]}" "$SRC_CLAWDBOT/" "$DEST_LATEST/.clawdbot/"
+  rsync "${RSYNC_COMMON[@]}" "${EXCLUDES[@]}" "$SRC_CLAWDBOT/" "$DEST_LATEST/.openclaw/"
 else
-  rsync "${RSYNC_COMMON[@]}" "$SRC_CLAWDBOT/" "$DEST_LATEST/.clawdbot/"
+  rsync "${RSYNC_COMMON[@]}" "$SRC_CLAWDBOT/" "$DEST_LATEST/.openclaw/"
 fi
 
 log "Done. Latest backup at: $DEST_LATEST"

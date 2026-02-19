@@ -257,7 +257,7 @@ async function ibkrQuoteHK(symbols) {
   }
 
   // Cache conids to reduce API calls.
-  const cachePath = path.join(process.env.HOME || '', '.clawdbot', 'tmp', 'ibkr-hk-conids.json');
+  const cachePath = path.join(process.env.HOME || '', '.openclaw', 'tmp', 'ibkr-hk-conids.json');
   let cache = {};
   try { cache = JSON.parse(fs.readFileSync(cachePath, 'utf8')); } catch {}
 

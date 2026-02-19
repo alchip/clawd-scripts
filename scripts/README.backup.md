@@ -2,8 +2,8 @@
 
 This folder includes helper scripts to back up and restore:
 
-- **A (workspace):** `/Users/sunny/clawd`
-- **B (runtime data):** `~/.clawdbot`
+- **A (workspace):** `/Users/sunny/.openclaw/workspace`
+- **B (runtime data):** `~/.openclaw`
 
 We use **two layers**:
 
@@ -21,22 +21,22 @@ Script:
 Destination:
 - `~/Backups/clawdbot/latest/`
   - `latest/clawd/` (A)
-  - `latest/.clawdbot/` (B)
+  - `latest/.openclaw/` (B)
 
 Run manually:
 ```bash
-/Users/sunny/clawd/scripts/clawdbot-backup.sh
+/Users/sunny/.openclaw/workspace/clawd-scripts/scripts/clawdbot-backup.sh
 ```
 
-Optional environment variables (exclude big rebuildable dirs under `~/.clawdbot`):
-- `EXCLUDE_MODELS=1` → excludes `~/.clawdbot/models/`
-- `EXCLUDE_BROWSER_PROFILES=1` → excludes `~/.clawdbot/browser/` + `~/.clawdbot/chrome-cdp-profile/`
-- `EXCLUDE_LOGS=1` → excludes `~/.clawdbot/logs/`
+Optional environment variables (exclude big rebuildable dirs under `~/.openclaw`):
+- `EXCLUDE_MODELS=1` → excludes `~/.openclaw/models/`
+- `EXCLUDE_BROWSER_PROFILES=1` → excludes `~/.openclaw/browser/` + `~/.openclaw/chrome-cdp-profile/`
+- `EXCLUDE_LOGS=1` → excludes `~/.openclaw/logs/`
 
 Example (lightweight backup):
 ```bash
 EXCLUDE_MODELS=1 EXCLUDE_BROWSER_PROFILES=1 EXCLUDE_LOGS=1 \
-  /Users/sunny/clawd/scripts/clawdbot-backup.sh
+  /Users/sunny/.openclaw/workspace/clawd-scripts/scripts/clawdbot-backup.sh
 ```
 
 ### Restore (from latest mirror)
@@ -44,13 +44,13 @@ Script:
 - `clawdbot-restore-latest.sh`
 
 What it does:
-- Stops the gateway (`clawdbot gateway stop`)
+- Stops the gateway (`openclaw gateway stop`)
 - Restores A + B from `~/Backups/clawdbot/latest/` using `rsync --delete`
-- Starts the gateway (`clawdbot gateway start`)
+- Starts the gateway (`openclaw gateway start`)
 
 Run:
 ```bash
-/Users/sunny/clawd/scripts/clawdbot-restore-latest.sh
+/Users/sunny/.openclaw/workspace/clawd-scripts/scripts/clawdbot-restore-latest.sh
 ```
 
 ⚠️ **Warning:** restore uses `rsync --delete` and will overwrite current files.
@@ -70,30 +70,30 @@ Destination:
 
 Run:
 ```bash
-/Users/sunny/clawd/scripts/clawdbot-snapshot.sh
+/Users/sunny/.openclaw/workspace/clawd-scripts/scripts/clawdbot-snapshot.sh
 ```
 
-Optional environment variables (same idea as mirror; excludes apply to the `~/.clawdbot` part):
+Optional environment variables (same idea as mirror; excludes apply to the `~/.openclaw` part):
 ```bash
 EXCLUDE_MODELS=1 EXCLUDE_BROWSER_PROFILES=1 EXCLUDE_LOGS=1 \
-  /Users/sunny/clawd/scripts/clawdbot-snapshot.sh
+  /Users/sunny/.openclaw/workspace/clawd-scripts/scripts/clawdbot-snapshot.sh
 ```
 
 ### Restore snapshot
 1) Stop gateway:
 ```bash
-clawdbot gateway stop
+openclaw gateway stop
 ```
 
-2) Extract the tarball back to root (`/`). This will restore paths like `/Users/sunny/clawd` and `/Users/sunny/.clawdbot`.
+2) Extract the tarball back to root (`/`). This will restore paths like `/Users/sunny/.openclaw/workspace` and `/Users/sunny/.openclaw`.
 ```bash
 sudo tar -xzf ~/Backups/clawdbot/snapshots/clawdbot-snapshot-YYYYmmdd-HHMMSS.tgz -C /
 ```
 
 3) Start + check:
 ```bash
-clawdbot gateway start
-clawdbot status
+openclaw gateway start
+openclaw status
 ```
 
 ---

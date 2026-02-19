@@ -11,7 +11,7 @@ if [[ -z "$AUDIO_PATH" || ! -f "$AUDIO_PATH" ]]; then
 fi
 
 WHISPER_CLI=${WHISPER_CLI:-/opt/homebrew/bin/whisper-cli}
-MODEL_PATH=${WHISPER_CPP_MODEL:-$HOME/.clawdbot/models/whisper/ggml-small.bin}
+MODEL_PATH=${WHISPER_CPP_MODEL:-$HOME/.openclaw/models/whisper/ggml-small.bin}
 LANG=${WHISPER_LANG:-auto}
 
 if [[ ! -x "$WHISPER_CLI" ]]; then
